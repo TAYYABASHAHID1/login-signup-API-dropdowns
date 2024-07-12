@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Dropdown</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0bfce 0%, #81b5bb 100%);
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 50px;
+            max-width: 500px;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+        }
+        .product-details {
+            display: none;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .product-details img {
+            border-radius: 15px 15px 0 0;
+            object-fit: cover;
+            width: 100%;
+            height: 200px;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .card-text {
+            font-size: 1em;
+            color: #555;
+        }
+        .card-text strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="form-group">
+            <label for="productDropdown">Select a Product:</label>
+            <select class="form-control" id="productDropdown">
+                <option value="">-- Select a Product --</option>
+            </select>
+        </div>
+
+        <div class="product-details card">
+            <img src="" id="productThumbnail" class="card-img-top" alt="Product Image" style="height: 300px; width: 300px;">
+            <div class="card-body">
+                <h5 class="card-title" id="productTitle"></h5>
+                <p class="card-text">
+                    <strong>ID:</strong> <span id="productId"></span><br>
+                    <strong>Price:</strong> $<span id="productPrice"></span><br>
+                    <strong>Quantity:</strong> <span id="productQuantity"></span><br>
+                    <strong>Total:</strong> $<span id="productTotal"></span><br>
+                    <strong>Discount Percentage:</strong> <span id="productDiscountPercentage"></span>%<br>
+                    <strong>Discounted Total:</strong> $<span id="productDiscountedTotal"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 78,
+                title: "Apple MacBook Pro 14 Inch Space Grey",
+                price: 1999.99,
+                quantity: 2,
+                total: 3999.98,
+                discountPercentage: 18.52,
+                discountedTotal: 3259.18,
+                thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png"
+            },
+            {
+                id: 100,
+                title: "Apple Airpods",
+                price: 129.99,
+                quantity: 5,
+                total: 649.95,
+                discountPercentage: 12.84,
+                discountedTotal: 566.5,
+                thumbnail: "https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Airpods/thumbnail.png"
+            },
+            {
+                id: 79,
+                title: "Dell XPS 13",
+                price: 1499.99,
+                quantity: 1,
+                total: 1499.99,
+                discountPercentage: 10.00,
+                discountedTotal: 1349.99,
+                thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Dell%20XPS%2013/thumbnail.png"
+            },
+            {
+                id: 144,
+                title: "Cricket Helmet",
+                price: 44.99,
+                quantity: 4,
+                total: 179.96,
+                discountPercentage: 11.47,
+                discountedTotal: 159.32,
+                thumbnail: "https://cdn.dummyjson.com/products/images/sports-accessories/Cricket%20Helmet/thumbnail.png"
+            },
+            {
+                id: 167,
+                title: "300 Touring",
+                price: 28999.99,
+                quantity: 5,
+                total: 144999.95,
+                discountPercentage: 11.78,
+                discountedTotal: 127918.96,
+                thumbnail: "https://cdn.dummyjson.com/products/images/vehicle/300%20Touring/thumbnail.png"
+            },
+            {
+                id: 111,
+                title: "Selfie Stick Monopod",
+                price: 12.99,
+                quantity: 4,
+                total: 51.96,
+                discountPercentage: 10.98,
+                discountedTotal: 46.25,
+                thumbnail: "https://cdn.dummyjson.com/products/images/mobile-accessories/Selfie%20Stick%20Monopod/thumbnail.png"
+            },
+            {
+                id: 129,
+                title: "Realme X",
+                price: 299.99,
+                quantity: 2,
+                total: 599.98,
+                discountPercentage: 10.13,
+                discountedTotal: 539.2,
+                thumbnail: "https://cdn.dummyjson.com/products/images/smartphones/Realme%20X/thumbnail.png"
+            },
+            {
+    "id": 7,
+    "products": [],
+    "total": 145651.89,
+    "discountedTotal": 128504.41,
+    "userId": 86,
+    "totalProducts": 3,
+    "totalQuantity": 11
+  },
+  {
+    
+        "id": 117,
+        "title": "Sportbike Motorcycle",
+        "price": 7499.99,
+        "quantity": 2,
+        "total": 14999.98,
+        "discountPercentage": 19.83,
+        "discountedTotal": 12025.48,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/motorcycle/Sportbike%20Motorcycle/thumbnail.png"
+      },
+      {
+        "id": 18,
+        "title": "Cat Food",
+        "price": 8.99,
+        "quantity": 4,
+        "total": 35.96,
+        "discountPercentage": 1.15,
+        "discountedTotal": 35.55,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Cat%20Food/thumbnail.png"
+      },
+      {
+        "id": 105,
+        "title": "Apple MagSafe Battery Pack",
+        "price": 99.99,
+        "quantity": 5,
+        "total": 499.95,
+        "discountPercentage": 7.14,
+        "discountedTotal": 464.25,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20MagSafe%20Battery%20Pack/thumbnail.png"
+      },
+      {
+        "id": 6,
+        "title": "Calvin Klein CK One",
+        "price": 49.99,
+        "quantity": 3,
+        "total": 149.97,
+        "discountPercentage": 5.67,
+        "discountedTotal": 141.47,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/thumbnail.png"
+      },
+    
+
+  {
+    "id": 9,
+
+        "title": "Corset Leather With Skirt",
+        "price": 89.99,
+        "quantity": 2,
+        "total": 179.98,
+        "discountPercentage": 12.59,
+        "discountedTotal": 157.32,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/womens-dresses/Corset%20Leather%20With%20Skirt/thumbnail.png"
+      },
+      {
+        "id": 191,
+        "title": "Rolex Cellini Moonphase",
+        "price": 15999.99,
+        "quantity": 4,
+        "total": 63999.96,
+        "discountPercentage": 3.26,
+        "discountedTotal": 61913.56,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/womens-watches/Rolex%20Cellini%20Moonphase/thumbnail.png"
+      },
+      {
+        "id": 47,
+        "title": "Table Lamp",
+        "price": 49.99,
+        "quantity": 2,
+        "total": 99.98,
+        "discountPercentage": 13.74,
+        "discountedTotal": 86.24,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/home-decoration/Table%20Lamp/thumbnail.png"
+      },
+      {
+        "id": 134,
+        "title": "Vivo S1",
+        "price": 249.99,
+        "quantity": 5,
+        "total": 1249.95,
+        "discountPercentage": 5.64,
+        "discountedTotal": 1179.45,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/smartphones/Vivo%20S1/thumbnail.png"
+      },
+  
+  {
+    "id": 10,
+        "title": "IWC Ingenieur Automatic Steel",
+        "price": 4999.99,
+        "quantity": 5,
+        "total": 24999.95,
+        "discountPercentage": 12.34,
+        "discountedTotal": 21914.96,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/womens-watches/IWC%20Ingenieur%20Automatic%20Steel/thumbnail.png"
+      },
+      {
+        "id": 94,
+        "title": "Longines Master Collection",
+        "price": 1499.99,
+        "quantity": 3,
+        "total": 4499.97,
+        "discountPercentage": 16.44,
+        "discountedTotal": 3760.17,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/mens-watches/Longines%20Master%20Collection/thumbnail.png"
+      },
+    
+  {
+    "id": 11,
+        "title": "Nike Air Jordan 1 Red And Black",
+        "price": 149.99,
+        "quantity": 1,
+        "total": 149.99,
+        "discountPercentage": 17.18,
+        "discountedTotal": 124.22,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/thumbnail.png"
+      },
+      {
+        "id": 32,
+        "title": "Milk",
+        "price": 3.49,
+        "quantity": 3,
+        "total": 10.47,
+        "discountPercentage": 9.36,
+        "discountedTotal": 9.49,
+        "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Milk/thumbnail.png"
+      }
+    ];
+      
+
+        const productDropdown = document.getElementById('productDropdown');
+
+        products.forEach(product => {
+            const option = document.createElement('option');
+            option.value = product.id;
+            option.text = product.title;
+            productDropdown.appendChild(option);
+        });
+
+        productDropdown.addEventListener('change', function() {
+            const selectedProductId = this.value;
+            const product = products.find(p => p.id == selectedProductId);
+
+            if (product) {
+                document.getElementById('productThumbnail').src = product.thumbnail;
+                document.getElementById('productTitle').innerText = product.title;
+                document.getElementById('productId').innerText = product.id;
+                document.getElementById('productPrice').innerText = product.price.toFixed(2);
+                document.getElementById('productQuantity').innerText = product.quantity;
+                document.getElementById('productTotal').innerText = product.total.toFixed(2);
+                document.getElementById('productDiscountPercentage').innerText = product.discountPercentage.toFixed(2);
+                document.getElementById('productDiscountedTotal').innerText = product.discountedTotal.toFixed(2);
+
+                document.querySelector('.product-details').style.display = 'block';
+            } else {
+                document.querySelector('.product-details').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

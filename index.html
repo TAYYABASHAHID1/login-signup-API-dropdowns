@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/df8a27e888.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            background-image: url(https://static.vecteezy.com/system/resources/thumbnails/008/969/361/small/multi-layers-gray-blue-dark-texture-3d-papercut-layers-in-gradient-banner-abstract-paper-cut-art-background-design-for-website-template-topography-map-concept-or-smooth-origami-paper-cut-vector.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-box {
+            font-size: 30px;
+            color: #3c00a0;
+            background: #fff;
+            padding: 50px 60px 70px;
+            text-align: center; 
+            width: 400px;
+            border-radius: 10px;
+        }
+
+        .form-box h1 {
+            font-size: 30px;
+            margin-bottom: 60px;
+            color: #3c00a0;
+            position: relative;
+        }
+
+        .form-box h1::after {
+            content: " ";
+            width: 30px;
+            height: 4px;
+            border-radius: 3px;
+            background: #3c00a0;
+            position: absolute; 
+            bottom: -12px;
+            left: 50%; 
+            transform: translateX(-50%);
+        } 
+
+        .input-field {
+            background: #eaeaea;
+            margin: 15px 0;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            max-height: 65px;
+            transition: max-height 0.5s;
+            overflow: hidden;
+        }
+
+        .input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            padding: 18px 15px;
+        }
+
+        p {
+            text-align: left;
+            font-size: 13px;
+        }
+
+        p a {
+            text-decoration: none;
+            color: #3c00a0;
+        }
+
+        .btn-field {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transition: background 1s;
+        }
+
+        .btn-field a {
+            flex-basis: 48%;
+            background: #3c00a0;
+            color: #fff;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-field a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: #2e007a;
+            transition: all 0.4s ease;
+            border-radius: 50%;
+            z-index: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .btn-field a:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .btn-field a:hover {
+            color: #fff;
+        }
+
+        .btn-field a span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-field a.disable {
+            background: #eaeaea;
+            color: #555;
+        }
+
+        .btn-field a.disable::before {
+            background: #d4d4d4;
+        }
+
+        .btn-field a.disable:hover {
+            color: #555;
+        }
+
+        .submit-btn {
+            background: #3c00a0;
+            color: #fff;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: block;
+            margin: 20px auto;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h1 id="title">Sign up</h1>
+            <form id="signupForm">
+                <div class="input-group">
+                    <div class="input-field" id="name-field">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" id="name" placeholder="Name" class="input">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Email" class="input">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" class="input"> 
+                    </div>
+                    <p style="font-size: 13px;">Lost password &#160; <a href="#">Click Here!</a></p>
+                </div>
+            </form>
+            <div class="btn-field">
+           
+                <a href="#" id="submitLink"><span>Sign up</span></a>
+                <a href="signin.html" id="signin" class="disable"><span>Sign in</span></a>
+            </div>
+        </div>
+    </div>    
+
+    <script>
+        document.getElementById('submitLink').addEventListener('click', function(event) {
+            event.preventDefault(); 
+
+            // Get form values
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Create user data object
+            var userData = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            // Store user data in localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            // Enable sign in and sign out buttons
+            document.getElementById('signin').classList.remove('disable');
+            document.getElementById('signout').classList.remove('disable');
+
+            // Redirect to sign out page
+            window.location.href = 'signout.html';
+        });
+    </script>
+</body>
+</html>
